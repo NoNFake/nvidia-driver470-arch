@@ -1,21 +1,19 @@
 #!/bin/bash
 
-# Install git and yay
-echo "Installing Git and Yay..."
-sudo pacman -Sy git
-sudo git clone https://aur.archlinux.org/yay-git.git /tmp/yay-git
-cd /tmp/yay-git
-sudo chown -R $USER:$USER .
-makepkg -si --noconfirm
-cd -
-sudo yay -Syu --noconfirm
+# Create a new user to build and install packages
+sudo useradd -m pkgbuilder
 
-# Install Nvidia 470 driver and dependencies
-echo "Installing Nvidia 470 driver and dependencies..."
-sudo yay -S --noconfirm linux-headers nvidia-470xx-dkms nvidia-470xx-settings nvidia-470xx-utils
+# Clone yay-git repository and build package
+sudo -u pkgbuilder bash -c 'cd ~ && git clone https://aur.archlinux.org/yay-git.git && cd yay-git && makepkg -si'
 
-# Update system
-echo "Updating system..."
+# Remove pkgbuilder user
+sudo userdel -r pkgbuilder
+
+# Update system and install Nvidia 470 driver and dependencies
+yay -Syu --noconfirm
+yay -S --noconfirm linux-headers nvidia-470xx-dkms nvidia-470xx-settings nvidia-470xx-utils
+
+# Update system again
 sudo pacman -Suy --noconfirm
 
 echo "Done."
