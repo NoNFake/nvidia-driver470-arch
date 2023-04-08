@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Install go
+sudo pacman -Sy go
+
 # Create a new user to build and install packages
 sudo useradd -m pkgbuilder
 
