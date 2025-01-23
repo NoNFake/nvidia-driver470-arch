@@ -10,5 +10,11 @@ cd yay-git
 makepkg -si
 sudo yay -Syu
 yay -Syu --devel --timeupdate
-yay -S linux-headers nvidia-dkms nvidia-settings nvidia-utils
+
+# For newest Nvidia series 
+# yay -S linux-headers nvidia-dkms nvidia-settings nvidia-utils
+
+yay -S linux-headers nvidia-470xx-dkms nvidia-470xx-settings nvidia-470xx-utils
+
+
 sudo pacman -Suy
